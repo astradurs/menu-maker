@@ -14,7 +14,7 @@ import { useForm } from 'react-hook-form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { postCourse } from '@/lib/db/post-course';
+import { NextRequest } from 'next/server';
 
 const formSchema = z.object({
 	title: z.string().min(2, {
@@ -39,11 +39,21 @@ export function CreateCourseForm({ userId }: { userId: string }) {
 	async function onSubmit(values: z.infer<typeof formSchema>) {
 		// Do something with the form values.
 		// ✅ This will be type-safe and validated.
-		console.log(values);
-		await postCourse({
-			course: values,
-			userId
+		console.log('values', values);
+		const url = `${process.env.API_URL}/course`;
+		console.log('url', url);
+		const request = new NextRequest(url, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				course: values,
+				userId
+			})
 		});
+		const response = await fetch(request);
+
 		console.log('posted course');
 	}
 
