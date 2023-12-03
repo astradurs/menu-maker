@@ -44,9 +44,9 @@ export async function getUser(): Promise<{
 }
 
 export function getAuthUrl() {
-	return workos.sso.getAuthorizationURL({
-		clientID: process.env.WORKOS_CLIENT_ID || '',
+	return workos.sso.getAuthorizationUrl({
+		clientId: process.env.WORKOS_CLIENT_ID || '',
 		provider: 'authkit',
-		redirectURI: process.env.WORKOS_REDIRECT_URI!
+		redirectUri: process.env.WORKOS_REDIRECT_URI!
 	});
 }

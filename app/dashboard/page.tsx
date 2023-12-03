@@ -16,5 +16,5 @@ export default async function DashboardPage() {
 		return redirect(authKitUrl);
 	}
 
-	return <div>LoggedIn!</div>;
+	return <div>LoggedIn in dashboard!</div>;
 }
