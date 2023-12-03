@@ -9,29 +9,82 @@ datasource db {
 
 model Role {
   uuid      String   @id @default(cuid())
-  id        String   @unique @db.VarChar(255)
-  name      String?  @db.VarChar(255)
   createdAt DateTime @default(now()) @db.Timestamp(6)
-  updatedAt DateTime @updatedAt @db.Timestamp(6)
+  updatedAt DateTime @updatedAt @default(now()) @db.Timestamp(6)
+  id        String   @unique @db.VarChar(50)
+  name      String?  @db.VarChar(50)
   users     User[]
 }
 
 model User {
-  uuid    String   @id @default(cuid())
-  firstName    String?  @db.VarChar(255)
-  lastName     String?  @db.VarChar(255)
-  email   String   @unique @db.VarChar(255)
-  roles   Role[]
-  courses Course[]
+  uuid               String              @id @default(cuid())
+  createdAt          DateTime            @default(now()) @db.Timestamp(6)
+  updatedAt          DateTime            @updatedAt @default(now()) @db.Timestamp(6)
+  firstName          String?             @db.VarChar(255)
+  lastName           String?             @db.VarChar(255)
+  email              String              @unique @db.VarChar(255)
+  roles              Role[]
+  courses            Course[]
+  courseTranslations CourseTranslation[]
+}
+
+model Allergen {
+  uuid           String       @id @default(cuid())
+  createdAt      DateTime     @default(now()) @db.Timestamp(6)
+  updatedAt      DateTime     @updatedAt @default(now()) @db.Timestamp(6)
+  id             String       @unique @db.VarChar(30)
+  name           String       @unique @db.VarChar(30)
+  description    String?
+  source         String?
+  Ingredients    Ingredient[]
+  ingredientUuid String?
+  published      Boolean      @default(false)
+}
+
+model Ingredient {
+  uuid        String     @id @default(cuid())
+  createdAt   DateTime   @default(now()) @db.Timestamp(6)
+  updatedAt   DateTime   @updatedAt @default(now()) @db.Timestamp(6)
+  published   Boolean    @default(false)
+  id          String     @unique @db.VarChar(30)
+  name        String     @unique @db.VarChar(30)
+  description String?
+  source      String?
+  allergens   Allergen[]
+}
+
+model Language {
+  uuid               String              @id @default(cuid())
+  createdAt          DateTime            @default(now()) @db.Timestamp(6)
+  updatedAt          DateTime            @updatedAt @default(now()) @db.Timestamp(6)
+  localeId           String              @unique @db.VarChar(8)
+  name               String              @unique @db.VarChar(10)
+  CourseTranslations CourseTranslation[]
+}
+
+model CourseTranslation {
+  uuid        String   @id @default(cuid())
+  createdAt   DateTime @default(now()) @db.Timestamp(6)
+  updatedAt   DateTime @updatedAt @default(now()) @db.Timestamp(6)
+  published   Boolean  @default(false)
+  course      Course   @relation(fields: [courseId], references: [uuid])
+  courseId    String
+  author      User     @relation(fields: [authorId], references: [uuid])
+  authorId    String
+  language    Language @relation(fields: [languageId], references: [uuid])
+  languageId  String
+  title       String
+  description String?
 }
 
 model Course {
-  uuid        String   @id @default(cuid())
-  title       String
-  description String?
-  authorId    String
-  author      User     @relation(fields: [authorId], references: [uuid])
-  createdAt   DateTime @default(now()) @db.Timestamp(6)
-  updatedAt   DateTime @updatedAt @db.Timestamp(6)
-  published   Boolean  @default(false)
+  uuid               String              @id @default(cuid())
+  createdAt          DateTime            @default(now()) @db.Timestamp(6)
+  updatedAt          DateTime            @updatedAt @default(now()) @db.Timestamp(6)
+  published          Boolean             @default(false)
+  authorId           String
+  author             User                @relation(fields: [authorId], references: [uuid])
+  title              String
+  description        String?
+  CourseTranslations CourseTranslation[]
 }
