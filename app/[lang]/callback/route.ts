@@ -28,7 +28,7 @@ export async function GET(request: Request) {
 
 		// remove the code from the redirect URL
 		url.searchParams.delete('code');
-		url.pathname = '/dashboard';
+		url.pathname = `/${lng}/dashboard`;
 
 		const response = NextResponse.redirect(url);
 

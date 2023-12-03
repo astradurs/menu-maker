@@ -5,7 +5,7 @@ import { SignInButton } from '@/components/sign-in-button';
 import Link from 'next/link';
 import { getUser } from './auth';
 
-export default async function Home() {
+export default async function Home({ params: { lng } }) {
 	const { isAuthenticated } = await getUser();
 
 	return (
@@ -47,10 +47,6 @@ export default async function Home() {
 			</div>
 			<ThemeToggle />
 
-			{/* <Link href="/dashboard">
-				<Button>Authenticate and go to dashboard</Button>
-			</Link> */}
-
 			{isAuthenticated ? (
 				<>
 					<h1 className="text-5xl font-bold leading-tight tracking-tighter">
@@ -65,7 +61,7 @@ export default async function Home() {
 						So <em>don’t tell anyone about us yet</em>.
 					</p>
 					<p className="max-w-[750px] mt-1 text-xl">
-						<Link href="/dashboard">
+						<Link href={`/${lng}/dashboard`}>
 							<Button>Go to your dashboard</Button>
 						</Link>
 					</p>
