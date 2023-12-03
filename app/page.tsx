@@ -1,17 +1,13 @@
 import Image from 'next/image';
 import { ThemeToggle } from '@/components/theme-toggle';
+import { Button } from '@/components/ui/button';
+import { SignInButton } from '@/components/sign-in-button';
+import Link from 'next/link';
+import { getUser } from './auth';
 
 export default async function Home() {
-	const requestParams = {
-		method: 'GET',
-		headers: {
-			'Content-Type': 'application/json'
-		}
-	};
-	const request = await fetch('http://localhost:3000/api', requestParams);
-	console.log({ request });
-	const data = await request.json();
-	console.log({ data });
+	const { isAuthenticated } = await getUser();
+
 	return (
 		<main className="flex min-h-screen flex-col items-center justify-between p-24">
 			<div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
@@ -50,6 +46,48 @@ export default async function Home() {
 				/>
 			</div>
 			<ThemeToggle />
+
+			{/* <Link href="/dashboard">
+				<Button>Authenticate and go to dashboard</Button>
+			</Link> */}
+
+			{isAuthenticated ? (
+				<>
+					<h1 className="text-5xl font-bold leading-tight tracking-tighter">
+						So stealthy you can call us Bigfoot
+					</h1>
+					<p className="max-w-[750px] text-xl text-muted-foreground">
+						You’re now part of the stealthiest startup in tech. We’re pre-seed,
+						pre-revenue, and pre-product but{' '}
+						<strong>we know how to get people hyped</strong>.
+					</p>
+					<p className="max-w-[750px] text-xl text-muted-foreground">
+						So <em>don’t tell anyone about us yet</em>.
+					</p>
+					<p className="max-w-[750px] mt-1 text-xl">
+						<Link href="/dashboard">
+							<Button>Go to your dashboard</Button>
+						</Link>
+					</p>
+				</>
+			) : (
+				<>
+					<h1 className="text-5xl font-bold leading-tight tracking-tighter">
+						What will you build?
+					</h1>
+					<p className="max-w-[750px] text-xl text-muted-foreground">
+						This startup is so deep in stealth mode we haven’t even named it yet. But...
+						since you’re here, why don’t you sign up and give us a try?
+					</p>
+					<p className="max-w-[750px] mt-1 text-xl">
+						<Link href="/dashboard">
+							<Button>Log in</Button>
+						</Link>
+					</p>
+				</>
+			)}
+
+			{/* <SignInButton /> */}
 			<div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
 				<a
 					href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
