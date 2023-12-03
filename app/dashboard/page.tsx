@@ -1,8 +1,8 @@
 import { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 import { getUser, getAuthUrl } from '@/app/auth';
-import { getUser as getDBUser } from '@/lib/db/get-user';
 import { CreateCourseForm } from '@/components/forms/create-course';
+import { NextRequest } from 'next/server';
 
 interface User {
 	uuid: string;
@@ -17,11 +17,21 @@ export const metadata: Metadata = {
 };
 
 export default async function DashboardPage() {
-	const { isAuthenticated, user } = await getUser();
+	const { isAuthenticated, user: authUser } = await getUser();
 
 	let dbUser = null;
-	if (user !== null && user !== undefined) {
-		dbUser = await getDBUser({ email: user.email });
+	if (authUser !== null && authUser !== undefined) {
+		const request = new NextRequest(`${process.env.API_URL}/user/${authUser.email}`, {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		});
+
+		const response = await fetch(request);
+		const { user: reqUser } = await response.json();
+		dbUser = reqUser;
+		console.log('dbUser', dbUser);
 	}
 
 	if (!isAuthenticated) {
