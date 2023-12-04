@@ -10,7 +10,7 @@ datasource db {
 model Role {
   uuid      String   @id @default(cuid())
   createdAt DateTime @default(now()) @db.Timestamp(6)
-  updatedAt DateTime @updatedAt @default(now()) @db.Timestamp(6)
+  updatedAt DateTime @default(now()) @updatedAt @db.Timestamp(6)
   id        String   @unique @db.VarChar(50)
   name      String?  @db.VarChar(50)
   users     User[]
@@ -19,7 +19,7 @@ model Role {
 model User {
   uuid               String              @id @default(cuid())
   createdAt          DateTime            @default(now()) @db.Timestamp(6)
-  updatedAt          DateTime            @updatedAt @default(now()) @db.Timestamp(6)
+  updatedAt          DateTime            @default(now()) @updatedAt @db.Timestamp(6)
   firstName          String?             @db.VarChar(255)
   lastName           String?             @db.VarChar(255)
   email              String              @unique @db.VarChar(255)
@@ -31,32 +31,33 @@ model User {
 model Allergen {
   uuid           String       @id @default(cuid())
   createdAt      DateTime     @default(now()) @db.Timestamp(6)
-  updatedAt      DateTime     @updatedAt @default(now()) @db.Timestamp(6)
+  updatedAt      DateTime     @default(now()) @updatedAt @db.Timestamp(6)
   id             String       @unique @db.VarChar(30)
   name           String       @unique @db.VarChar(30)
   description    String?
   source         String?
   Ingredients    Ingredient[]
-  ingredientUuid String?
   published      Boolean      @default(false)
+  courses        Course[]
 }
 
 model Ingredient {
   uuid        String     @id @default(cuid())
   createdAt   DateTime   @default(now()) @db.Timestamp(6)
-  updatedAt   DateTime   @updatedAt @default(now()) @db.Timestamp(6)
+  updatedAt   DateTime   @default(now()) @updatedAt @db.Timestamp(6)
   published   Boolean    @default(false)
   id          String     @unique @db.VarChar(30)
   name        String     @unique @db.VarChar(30)
   description String?
   source      String?
   allergens   Allergen[]
+  courses     Course[]
 }
 
 model Language {
   uuid               String              @id @default(cuid())
   createdAt          DateTime            @default(now()) @db.Timestamp(6)
-  updatedAt          DateTime            @updatedAt @default(now()) @db.Timestamp(6)
+  updatedAt          DateTime            @default(now()) @updatedAt @db.Timestamp(6)
   localeId           String              @unique @db.VarChar(8)
   name               String              @unique @db.VarChar(10)
   CourseTranslations CourseTranslation[]
@@ -65,7 +66,7 @@ model Language {
 model CourseTranslation {
   uuid        String   @id @default(cuid())
   createdAt   DateTime @default(now()) @db.Timestamp(6)
-  updatedAt   DateTime @updatedAt @default(now()) @db.Timestamp(6)
+  updatedAt   DateTime @default(now()) @updatedAt @db.Timestamp(6)
   published   Boolean  @default(false)
   course      Course   @relation(fields: [courseId], references: [uuid])
   courseId    String
@@ -80,10 +81,12 @@ model CourseTranslation {
 model Course {
   uuid               String              @id @default(cuid())
   createdAt          DateTime            @default(now()) @db.Timestamp(6)
-  updatedAt          DateTime            @updatedAt @default(now()) @db.Timestamp(6)
+  updatedAt          DateTime            @default(now()) @updatedAt @db.Timestamp(6)
   published          Boolean             @default(false)
   authorId           String
   author             User                @relation(fields: [authorId], references: [uuid])
+  allergens          Allergen[]
+  ingredients        Ingredient[]
   title              String
   description        String?
   CourseTranslations CourseTranslation[]
