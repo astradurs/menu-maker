@@ -43,7 +43,7 @@ export default async function DashboardPage() {
 	return (
 		<div>
 			<WelcomeHeading user={dbUser} />
-			{dbUser !== null ? (
+			{dbUser !== null && dbUser !== undefined ? (
 				<div>
 					<CreateCourseForm userId={dbUser.uuid} />
 				</div>
@@ -59,7 +59,7 @@ export default async function DashboardPage() {
 }
 
 function WelcomeHeading({ user }: { user: User | null }) {
-	if (user === null) {
+	if (user === null || user === undefined) {
 		return (
 			<h1 className="text-5xl font-bold leading-tight tracking-tighter">
 				We don't know who you are, but you're logged in!
