@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 import { getUser, getAuthUrl } from '@/app/auth';
-import { CreateCourseForm } from '@/components/forms/create-course';
 import { NextRequest } from 'next/server';
 
 interface User {
@@ -43,17 +42,6 @@ export default async function DashboardPage() {
 	return (
 		<div>
 			<WelcomeHeading user={dbUser} />
-			{dbUser !== null && dbUser !== undefined ? (
-				<div>
-					<CreateCourseForm userId={dbUser.uuid} />
-				</div>
-			) : (
-				<div>
-					<p className="text-5xl font-bold leading-tight tracking-tighter">
-						We don't know who you are, but you're logged in!
-					</p>
-				</div>
-			)}
 		</div>
 	);
 }
