@@ -15,6 +15,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { NextRequest } from 'next/server';
+import submit from '@/app/courses/@create/actions';
 
 const formSchema = z.object({
 	title: z.string().min(2, {
@@ -53,8 +54,8 @@ export function CreateCourseForm({ userId }: { userId: string }) {
 			})
 		});
 		const response = await fetch(request);
-
 		console.log('posted course');
+		submit();
 	}
 
 	return (
