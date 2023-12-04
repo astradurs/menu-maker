@@ -1,7 +1,7 @@
-import { Metadata } from 'next';
-import { redirect } from 'next/navigation';
 import { getUser, getAuthUrl } from '@/app/auth';
+import { redirect } from 'next/navigation';
 import { NextRequest } from 'next/server';
+import { CreateCourseForm } from '@/components/forms/create-course';
 
 interface User {
 	uuid: string;
@@ -10,12 +10,7 @@ interface User {
 	lastName: string | null;
 }
 
-export const metadata: Metadata = {
-	title: 'Dashboard',
-	description: 'Example dashboard app built using the components.'
-};
-
-export default async function DashboardPage() {
+export default async function CreateCoursePage() {
 	const { isAuthenticated, user: authUser } = await getUser();
 
 	let dbUser = null;
@@ -42,6 +37,17 @@ export default async function DashboardPage() {
 	return (
 		<div>
 			<WelcomeHeading user={dbUser} />
+			{dbUser !== null && dbUser !== undefined ? (
+				<div>
+					<CreateCourseForm userId={dbUser.uuid} />
+				</div>
+			) : (
+				<div>
+					<p className="text-5xl font-bold leading-tight tracking-tighter">
+						We don't know who you are, but you're logged in!
+					</p>
+				</div>
+			)}
 		</div>
 	);
 }
