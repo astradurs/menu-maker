@@ -5,6 +5,7 @@ import { ThemeProvider } from '@/components/theme-provider';
 import { cn } from '@/lib/utils';
 import './globals.css';
 import { SharedNav } from '@/components/nav/shared-nav';
+import { Footer } from '@/components/footer';
 
 export const metadata: Metadata = {
 	title: 'Create Next App',
@@ -30,6 +31,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 					<>
 						<SharedNav />
 						{children}
+						<Footer />
 					</>
 				</ThemeProvider>
 			</body>

@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
+import { Faq } from '@/components/landing/faq';
 
 export default async function Home() {
 	return (
@@ -71,6 +73,10 @@ export default async function Home() {
 						<div className="mt-4">
 							<Button variant="default">Get Started</Button>
 						</div>
+					</div>
+					<Separator className="col-span-2 col-start-2 my-4" />
+					<div className="col-span-2 col-start-2">
+						<Faq />
 					</div>
 				</div>
 			</main>
