@@ -4,6 +4,7 @@ import { GeistSans } from 'geist/font/sans'; // Geist also has a mono font
 import { ThemeProvider } from '@/components/theme-provider';
 import { cn } from '@/lib/utils';
 import './globals.css';
+import { SharedNav } from '@/components/nav/shared-nav';
 
 export const metadata: Metadata = {
 	title: 'Create Next App',
@@ -26,7 +27,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 					defaultTheme="system"
 					enableSystem
 				>
-					{children}
+					<>
+						<SharedNav />
+						{children}
+					</>
 				</ThemeProvider>
 			</body>
 		</html>
