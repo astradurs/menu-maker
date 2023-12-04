@@ -1,11 +1,8 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { getUser } from './auth';
 import { Button } from '@/components/ui/button';
 
 export default async function Home() {
-	const { isAuthenticated } = await getUser();
-
 	return (
 		<>
 			<main className="flex min-h-screen flex-col items-center justify-between p-4">
@@ -38,6 +35,42 @@ export default async function Home() {
 							width={800}
 							height={1200}
 						/>
+					</div>
+					<div className="col-span-4 col-start-2 mt-6">
+						<h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl xl:text-[3.4rem] 2xl:text-[3.75rem] mb-4">
+							How It Works
+						</h2>
+						<ol className="list-decimal list-inside text-gray-500 dark:text-gray-400 space-y-4">
+							<li>
+								<strong className="text-black dark:text-white">
+									Adding Courses:
+								</strong>
+								&nbsp; Start by adding the dishes you want to offer in your menu.
+							</li>
+							<li>
+								<strong className="text-black dark:text-white">
+									Editing Courses:
+								</strong>
+								&nbsp; After adding, you can edit the courses anytime to make
+								changes.
+							</li>
+							<li>
+								<strong className="text-black dark:text-white">
+									Building Menu:
+								</strong>
+								&nbsp; Once you're satisfied with the courses, arrange them to build
+								a menu.
+							</li>
+							<li>
+								<strong className="text-black dark:text-white">
+									Exporting Menu:
+								</strong>
+								&nbsp; Finally, export your menu for easy sharing and printing.
+							</li>
+						</ol>
+						<div className="mt-4">
+							<Button variant="default">Get Started</Button>
+						</div>
 					</div>
 				</div>
 			</main>
