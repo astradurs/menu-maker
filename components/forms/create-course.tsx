@@ -22,8 +22,7 @@ const formSchema = z.object({
 	}),
 	description: z.string().min(2, {
 		message: 'description must be at least 2 characters.'
-	}),
-	ingredients: z.array(z.string())
+	})
 });
 
 export function CreateCourseForm({ userId }: { userId: string }) {
@@ -32,8 +31,7 @@ export function CreateCourseForm({ userId }: { userId: string }) {
 		resolver: zodResolver(formSchema),
 		defaultValues: {
 			title: '',
-			description: '',
-			ingredients: []
+			description: ''
 		}
 	});
 
@@ -95,7 +93,13 @@ export function CreateCourseForm({ userId }: { userId: string }) {
 						</FormItem>
 					)}
 				/>
-				<Button type="submit">Submit</Button>
+
+				<Button
+					disabled={!form.formState.isValid || form.formState.isSubmitting}
+					type="submit"
+				>
+					Submit
+				</Button>
 			</form>
 		</Form>
 	);
