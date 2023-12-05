@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+import { NextRequest } from 'next/server';
 
 export interface User {
 	uuid: string;
@@ -16,6 +17,20 @@ interface Course {
 	createdAt: Date;
 	updatedAt: Date;
 	published: boolean;
+}
+
+export async function listCoursesRequest() {
+	const request = new NextRequest(`${process.env.API_URL}/course`, {
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	});
+
+	const response = await fetch(request);
+	const { courses } = await response.json();
+
+	return courses;
 }
 
 export async function listCourses(params?: { userId: string }) {
