@@ -8,9 +8,9 @@ export default function CoursesLayout({
 	list: React.ReactNode;
 }) {
 	return (
-		<div className="grid grid-cols-12 gap-4">
-			<div className="col-span-7">{create}</div>
-			<div className="col-span-5">{list}</div>
+		<div className="grid grid-cols-12 gap-4 p-4">
+			<div className="col-span-7 border-2 rounded-md">{create}</div>
+			<div className="col-span-5 border-2 rounded-md">{list}</div>
 		</div>
 	);
 }

@@ -28,7 +28,7 @@ export async function listCoursesRequest() {
 	});
 
 	const response = await fetch(request);
-	const { courses } = await response.json();
+	const courses = await response.json();
 
 	return courses;
 }
@@ -38,17 +38,28 @@ export async function listCourses(params?: { userId: string }) {
 
 	let courses;
 	if (params === undefined) {
-		courses = await prisma.course.findMany();
+		courses = await prisma.course.findMany({
+			include: {
+				ingredients: true,
+				allergens: true
+			}
+		});
 	} else {
 		const userId = params.userId;
 		courses = await prisma.course.findMany({
 			where: {
 				authorId: userId
+			},
+			include: {
+				ingredients: true,
+				allergens: true
 			}
 		});
 	}
 
 	await prisma.$disconnect();
+
+	console.log('listCourses', courses);
 
 	return courses;
 }
