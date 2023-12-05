@@ -1,3 +1,5 @@
+import { getUserRequest } from '@/app/api/user/[email]/get-user';
+import { listCoursesRequest } from '@/app/api/course/list-courses';
 import { getUser, getAuthUrl } from '@/app/auth';
 import {
 	Table,
@@ -35,16 +37,7 @@ export default async function ListCoursesPage() {
 
 	let dbUser = null;
 	if (authUser !== null && authUser !== undefined) {
-		const request = new NextRequest(`${process.env.API_URL}/user/${authUser.email}`, {
-			method: 'GET',
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		});
-
-		const response = await fetch(request, { next: { tags: ['courses'] } });
-		const { user: reqUser } = await response.json();
-		dbUser = reqUser;
+		dbUser = await getUserRequest({ email: authUser.email });
 		console.log('dbUser', dbUser);
 	}
 
@@ -54,17 +47,7 @@ export default async function ListCoursesPage() {
 		return redirect(authKitUrl);
 	}
 
-	const url = `${process.env.API_URL}/course`;
-	console.log('url', url);
-	const request = new NextRequest(url, {
-		method: 'GET',
-		headers: {
-			'Content-Type': 'application/json'
-		}
-	});
-
-	const response = await fetch(request);
-	const { courses } = await response.json();
+	const courses = await listCoursesRequest();
 
 	return (
 		<div>

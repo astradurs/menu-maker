@@ -1,10 +1,25 @@
 import { PrismaClient } from '@prisma/client';
+import { NextRequest } from 'next/server';
 
 export interface User {
 	uuid: string;
 	email: string;
 	firstName: string | null;
 	lastName: string | null;
+}
+
+export async function getUserRequest({ email }: { email: string }): Promise<User | null> {
+	const request = new NextRequest(`${process.env.API_URL}/user/${email}`, {
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	});
+
+	const response = await fetch(request);
+	const { user } = await response.json();
+
+	return user;
 }
 
 export async function getUser({ email }: { email: string }): Promise<User | null> {

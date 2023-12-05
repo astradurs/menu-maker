@@ -1,7 +1,7 @@
 import { getUser, getAuthUrl } from '@/app/auth';
 import { redirect } from 'next/navigation';
-import { NextRequest } from 'next/server';
 import { CreateCourseForm } from '@/components/forms/create-course';
+import { getUserRequest } from '@/app/api/user/[email]/get-user';
 
 interface User {
 	uuid: string;
@@ -15,16 +15,7 @@ export default async function CreateCoursePage() {
 
 	let dbUser = null;
 	if (authUser !== null && authUser !== undefined) {
-		const request = new NextRequest(`${process.env.API_URL}/user/${authUser.email}`, {
-			method: 'GET',
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		});
-
-		const response = await fetch(request);
-		const { user: reqUser } = await response.json();
-		dbUser = reqUser;
+		dbUser = await getUserRequest({ email: authUser.email });
 		console.log('dbUser', dbUser);
 	}
 
