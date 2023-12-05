@@ -2,6 +2,8 @@ import { getUser, getAuthUrl } from '@/app/auth';
 import { redirect } from 'next/navigation';
 import { CreateCourseForm } from '@/components/forms/create-course';
 import { getUserRequest } from '@/app/api/user/[email]/get-user';
+import { listIngredientsRequest } from '@/app/api/ingredient/list-ingredients';
+import { listAllergensRequest } from '@/app/api/allergen/list-allergens';
 
 interface User {
 	uuid: string;
@@ -13,24 +15,29 @@ interface User {
 export default async function CreateCoursePage() {
 	const { isAuthenticated, user: authUser } = await getUser();
 
-	let dbUser = null;
-	if (authUser !== null && authUser !== undefined) {
-		dbUser = await getUserRequest({ email: authUser.email });
-		console.log('dbUser', dbUser);
-	}
-
 	if (!isAuthenticated) {
 		const authKitUrl = getAuthUrl();
 
 		return redirect(authKitUrl);
 	}
 
+	let dbUser = null;
+	if (authUser !== null && authUser !== undefined) {
+		dbUser = await getUserRequest({ email: authUser.email });
+		console.log('dbUser', dbUser);
+	}
+	const ingredients = await listIngredientsRequest();
+	const allergens = await listAllergensRequest();
 	return (
 		<div>
 			<WelcomeHeading user={dbUser} />
 			{dbUser !== null && dbUser !== undefined ? (
 				<div>
-					<CreateCourseForm userId={dbUser.uuid} />
+					<CreateCourseForm
+						userId={dbUser.uuid}
+						ingredients={ingredients}
+						allergens={allergens}
+					/>
 				</div>
 			) : (
 				<div>

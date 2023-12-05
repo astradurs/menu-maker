@@ -36,7 +36,7 @@ model Allergen {
   name           String       @unique @db.VarChar(30)
   description    String?
   source         String?
-  Ingredients    Ingredient[]
+  ingredients    Ingredient[]
   published      Boolean      @default(false)
   courses        Course[]
 }

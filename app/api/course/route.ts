@@ -28,11 +28,10 @@ export async function POST(request: NextRequest) {
 		);
 	}
 
-	const responseData = await postCourse({ course, userId });
+	const newCourse = await postCourse({ course, userId });
 
-	const response = NextResponse.json({ course: responseData }, { status: 200 });
+	const response = NextResponse.json(newCourse, { status: 200 });
 
-	console.log('response', response);
 	return response;
 }
 
@@ -48,10 +47,9 @@ export async function GET(request: NextRequest) {
 		);
 	}
 
-	const responseData = await listCourses();
+	const courses = await listCourses();
 
-	const response = NextResponse.json({ courses: responseData }, { status: 200 });
+	const response = NextResponse.json(courses, { status: 200 });
 
-	console.log('response', response);
 	return response;
 }
