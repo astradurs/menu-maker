@@ -31,7 +31,6 @@ export async function GET(request: NextRequest, { params }: { params: { email: s
 
 		const response = NextResponse.json({ user });
 
-		console.log('response', response);
 		return response;
 	} catch (error) {
 		console.log('error', error);
