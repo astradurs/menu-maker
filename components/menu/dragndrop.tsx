@@ -59,7 +59,10 @@ export function DragNDrop() {
 						</div>
 					</ScrollArea>
 				</div>
-				<div className="col-span-4 col-start-2">Menu</div>
+				{/* <Separator orientation="vertical" /> */}
+				<div className="col-span-4 col-start-2">
+					<div className="border border-1 rounded-md h-full w-full"></div>
+				</div>
 			</div>
 		</div>
 	);
