@@ -27,39 +27,47 @@ export async function listCoursesRequest() {
 		}
 	});
 
-	const response = await fetch(request);
+	const response = await fetch(request, {
+		next: {
+			tags: ['get-courses']
+		}
+	});
 	const courses = await response.json();
 
 	return courses;
 }
 
 export async function listCourses(params?: { userId: string }) {
-	const prisma = new PrismaClient();
+	const f = 'listCourses';
+	try {
+		const prisma = new PrismaClient();
 
-	let courses;
-	if (params === undefined) {
-		courses = await prisma.course.findMany({
-			include: {
-				ingredients: true,
-				allergens: true
-			}
-		});
-	} else {
-		const userId = params.userId;
-		courses = await prisma.course.findMany({
-			where: {
-				authorId: userId
-			},
-			include: {
-				ingredients: true,
-				allergens: true
-			}
-		});
+		let courses;
+		if (params === undefined) {
+			courses = await prisma.course.findMany({
+				include: {
+					ingredients: true,
+					allergens: true
+				}
+			});
+		} else {
+			const userId = params.userId;
+			courses = await prisma.course.findMany({
+				where: {
+					authorId: userId
+				},
+				include: {
+					ingredients: true,
+					allergens: true
+				}
+			});
+		}
+
+		await prisma.$disconnect();
+
+		return courses;
+	} catch (error) {
+		console.error(f, error);
+		return [];
 	}
-
-	await prisma.$disconnect();
-
-	console.log('listCourses', courses);
-
-	return courses;
 }
