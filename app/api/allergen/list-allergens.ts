@@ -9,22 +9,24 @@ export async function listAllergensRequest() {
 			'Content-Type': 'application/json'
 		}
 	});
-	console.log(f, request);
 	try {
-		const response = await fetch(request);
-		console.log(f, response);
+		const response = await fetch(request, {
+			next: {
+				tags: ['get-courses']
+			}
+		});
 
 		const allergens = await response.json();
-		console.log(f, allergens);
 
 		return allergens;
 	} catch (error) {
-		console.log(f, error);
+		console.error(f, error);
 		return [];
 	}
 }
 
 export async function listAllergens() {
+	const f = 'listAllergens';
 	try {
 		const prisma = new PrismaClient();
 		const allergens = await prisma.allergen.findMany({
@@ -38,7 +40,7 @@ export async function listAllergens() {
 		}
 		return allergens;
 	} catch (error) {
-		console.log('listAllergens error', error);
+		console.error(f, error);
 		return [];
 	}
 }

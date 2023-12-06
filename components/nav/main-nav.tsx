@@ -19,6 +19,12 @@ export function MainNav({ className, ...props }: React.HTMLAttributes<HTMLElemen
 			>
 				Create menu
 			</Link>
+			<Link
+				href="/courses"
+				className={`text-sm font-medium transition-colors hover:text-primary`}
+			>
+				Courses
+			</Link>
 		</nav>
 	);
 }

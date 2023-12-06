@@ -17,6 +17,5 @@ export async function GET(request: NextRequest) {
 
 	const response = NextResponse.json(allergens, { status: 200 });
 
-	console.log('allergens get response', response);
 	return response;
 }

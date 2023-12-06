@@ -10,22 +10,24 @@ export async function listIngredientsRequest() {
 			'Content-Type': 'application/json'
 		}
 	});
-	console.log(f, request);
-	try {
-		const response = await fetch(request);
-		console.log(f, response);
 
+	try {
+		const response = await fetch(request, {
+			next: {
+				tags: ['get-courses']
+			}
+		});
 		const ingredients = await response.json();
-		console.log(f, ingredients);
 
 		return ingredients;
 	} catch (error) {
-		console.log(f, error);
+		console.error(f, error);
 		return [];
 	}
 }
 
 export async function listIngredients() {
+	const f = 'listIngredients';
 	try {
 		const prisma = new PrismaClient();
 		const ingredients = await prisma.ingredient.findMany({
@@ -39,7 +41,7 @@ export async function listIngredients() {
 		}
 		return ingredients;
 	} catch (error) {
-		console.log('listIngredients error', error);
+		console.error(f, error);
 		return [];
 	}
 }
