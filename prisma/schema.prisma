@@ -26,19 +26,33 @@ model User {
   roles              Role[]
   courses            Course[]
   courseTranslations CourseTranslation[]
+  team               Team?                @relation(fields: [teamUuid], references: [uuid])
+  teamUuid           String?
+}
+
+model Team {
+  uuid               String              @id @default(cuid())
+  createdAt          DateTime            @default(now()) @db.Timestamp(6)
+  updatedAt          DateTime            @default(now()) @updatedAt @db.Timestamp(6)
+  id                 String              @unique @db.VarChar(50)
+  domain             String?             @unique @db.VarChar(50)
+  name               String              @db.VarChar(50)
+  users              User[]
+  courses            Course[]
+  courseTranslations CourseTranslation[]
 }
 
 model Allergen {
-  uuid           String       @id @default(cuid())
-  createdAt      DateTime     @default(now()) @db.Timestamp(6)
-  updatedAt      DateTime     @default(now()) @updatedAt @db.Timestamp(6)
-  id             String       @unique @db.VarChar(30)
-  name           String       @unique @db.VarChar(30)
-  description    String?
-  source         String?
-  ingredients    Ingredient[]
-  published      Boolean      @default(false)
-  courses        Course[]
+  uuid        String       @id @default(cuid())
+  createdAt   DateTime     @default(now()) @db.Timestamp(6)
+  updatedAt   DateTime     @default(now()) @updatedAt @db.Timestamp(6)
+  id          String       @unique @db.VarChar(30)
+  name        String       @unique @db.VarChar(30)
+  description String?
+  source      String?
+  ingredients Ingredient[]
+  published   Boolean      @default(false)
+  courses     Course[]
 }
 
 model Ingredient {
@@ -59,7 +73,7 @@ model Language {
   createdAt          DateTime            @default(now()) @db.Timestamp(6)
   updatedAt          DateTime            @default(now()) @updatedAt @db.Timestamp(6)
   localeId           String              @unique @db.VarChar(8)
-  name               String              @unique @db.VarChar(10)
+  name               String              @unique @db.VarChar(30)
   CourseTranslations CourseTranslation[]
 }
 
@@ -72,8 +86,10 @@ model CourseTranslation {
   courseId    String
   author      User     @relation(fields: [authorId], references: [uuid])
   authorId    String
+  team        Team?     @relation(fields: [teamUuid], references: [uuid])
+  teamUuid      String?
   language    Language @relation(fields: [languageId], references: [uuid])
-  languageId  String
+  languageId  String   @db.VarChar(10)
   title       String
   description String?
 }
@@ -83,6 +99,8 @@ model Course {
   createdAt          DateTime            @default(now()) @db.Timestamp(6)
   updatedAt          DateTime            @default(now()) @updatedAt @db.Timestamp(6)
   published          Boolean             @default(false)
+  teamUuid             String?
+  team               Team?                @relation(fields: [teamUuid], references: [uuid])
   authorId           String
   author             User                @relation(fields: [authorId], references: [uuid])
   allergens          Allergen[]

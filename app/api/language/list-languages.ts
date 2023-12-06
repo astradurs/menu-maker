@@ -1,9 +1,9 @@
 import { PrismaClient } from '@prisma/client';
 import { NextRequest } from 'next/server';
 
-export async function listAllergensRequest() {
+export async function listLanguagesRequest() {
 	const f = 'listAllergensRequest';
-	const request = new NextRequest(`${process.env.API_URL}/allergen`, {
+	const request = new NextRequest(`${process.env.API_URL}/language`, {
 		method: 'GET',
 		headers: {
 			'Content-Type': 'application/json'
@@ -16,29 +16,25 @@ export async function listAllergensRequest() {
 			}
 		});
 
-		const allergens = await response.json();
+		const languages = await response.json();
 
-		return allergens;
+		return languages;
 	} catch (error) {
 		console.error(f, error);
 		return [];
 	}
 }
 
-export async function listAllergens() {
-	const f = 'listAllergens';
+export async function listLanguages() {
+	const f = 'listLanguages';
 	try {
 		const prisma = new PrismaClient();
-		const allergens = await prisma.allergen.findMany({
-			include: {
-				ingredients: true
-			}
-		});
+		const languages = await prisma.language.findMany();
 		await prisma.$disconnect();
-		if (!allergens) {
+		if (!languages) {
 			return [];
 		}
-		return allergens;
+		return languages;
 	} catch (error) {
 		console.error(f, error);
 		return [];

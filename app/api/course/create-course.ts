@@ -6,6 +6,14 @@ export interface User {
 	email: string;
 	firstName: string | null;
 	lastName: string | null;
+	teamUuid: string | null;
+	team: Team | null;
+}
+
+export interface Team {
+	uuid: string;
+	id: string;
+	name: string;
 }
 
 interface Course {
@@ -27,7 +35,6 @@ export async function postCourseRequest({
 	userId: string;
 }) {
 	const url = `${process.env.API_URL}/course`;
-	console.log('url', url);
 	const request = new NextRequest(url, {
 		method: 'POST',
 		headers: {
@@ -47,10 +54,10 @@ export async function postCourseRequest({
 
 export async function postCourse({
 	course,
-	userId
+	user
 }: {
 	course: { title: string; description: string; allergens: string[]; ingredients: string[] };
-	userId: string;
+	user: User;
 }) {
 	const prisma = new PrismaClient();
 
@@ -80,7 +87,8 @@ export async function postCourse({
 			ingredients: {
 				connect: ingredients
 			},
-			authorId: userId
+			authorId: user.uuid,
+			teamUuid: user.teamUuid
 		},
 		include: {
 			allergens: true,

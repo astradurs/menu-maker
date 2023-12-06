@@ -6,6 +6,14 @@ export interface User {
 	email: string;
 	firstName: string | null;
 	lastName: string | null;
+	teamUuid: string | null;
+	team: Team | null;
+}
+
+export interface Team {
+	uuid: string;
+	id: string;
+	name: string;
 }
 
 export async function getUserRequest({ email }: { email: string }): Promise<User | null> {
@@ -16,8 +24,33 @@ export async function getUserRequest({ email }: { email: string }): Promise<User
 		}
 	});
 
-	const response = await fetch(request);
+	const response = await fetch(request, {
+		next: {
+			tags: ['get-user']
+		}
+	});
 	const { user } = await response.json();
+
+	return user;
+}
+
+export async function getUserById({ userId }: { userId: string }): Promise<User | null> {
+	const prisma = new PrismaClient();
+
+	const user = await prisma.user.findUnique({
+		where: {
+			uuid: userId
+		},
+		include: {
+			team: true
+		}
+	});
+
+	await prisma.$disconnect();
+
+	if (!user) {
+		return null;
+	}
 
 	return user;
 }
@@ -28,6 +61,9 @@ export async function getUser({ email }: { email: string }): Promise<User | null
 	const user = await prisma.user.findUnique({
 		where: {
 			email
+		},
+		include: {
+			team: true
 		}
 	});
 
@@ -35,6 +71,15 @@ export async function getUser({ email }: { email: string }): Promise<User | null
 		const publicUser = await prisma.user.findUnique({
 			where: {
 				email: 'guest@dev.menumaker.com'
+			},
+			include: {
+				team: {
+					select: {
+						uuid: true,
+						id: true,
+						name: true
+					}
+				}
 			}
 		});
 		await prisma.$disconnect();

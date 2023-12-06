@@ -19,8 +19,8 @@ interface Course {
 	published: boolean;
 }
 
-export async function listCoursesRequest() {
-	const request = new NextRequest(`${process.env.API_URL}/course`, {
+export async function listTeamCoursesRequest({ teamId }: { teamId: string }) {
+	const request = new NextRequest(`${process.env.API_URL}/course/team/${teamId}`, {
 		method: 'GET',
 		headers: {
 			'Content-Type': 'application/json'
@@ -37,7 +37,7 @@ export async function listCoursesRequest() {
 	return courses;
 }
 
-export async function listCourses(params?: { userId: string }) {
+export async function listTeamCourses(params?: { teamId: string }) {
 	const f = 'listCourses';
 	try {
 		const prisma = new PrismaClient();
@@ -51,10 +51,18 @@ export async function listCourses(params?: { userId: string }) {
 				}
 			});
 		} else {
-			const userId = params.userId;
+			const team = await prisma.team.findUnique({
+				where: {
+					id: params.teamId
+				},
+				include: {
+					users: true
+				}
+			});
+
 			courses = await prisma.course.findMany({
 				where: {
-					authorId: userId
+					teamUuid: team?.uuid
 				},
 				include: {
 					ingredients: true,
