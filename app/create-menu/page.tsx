@@ -5,18 +5,18 @@ import { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 import { getUser, getAuthUrl } from '@/app/auth';
 import { Switch } from '@/components/ui/switch';
-import { DragNDrop } from '@/components/menu/dragndrop';
+// import { DragNDrop } from '@/components/menu/dragndrop';
 import { Dropdown } from '@/components/menu/dropdowns';
+import { DragDropContext } from 'react-beautiful-dnd';
 
 export const metadata: Metadata = {
 	title: 'Menu',
 	description: 'The page where you build your menu!'
 };
 
-export default async function MenuPage() {
+export default function MenuPage() {
 	// const { isAuthenticated, user: authUser } = await getUser();
-	const [dragNDrop, setDragNDrop] = useState(true);
-	console.log(dragNDrop);
+
 	// if (!isAuthenticated) {
 	// 	const authKitUrl = getAuthUrl();
 
@@ -31,7 +31,8 @@ export default async function MenuPage() {
 					<p className="ml-2">Select and dropdowns</p>
 				</div> */}
 			<div>
-				<DragNDrop />
+				{/* <DragNDrop /> */}
+				<Dropdown />
 			</div>
 		</main>
 	);
