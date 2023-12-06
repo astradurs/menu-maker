@@ -3,67 +3,75 @@
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
 
-export function DragNDrop() {
-	const menuItems = [
-		{
-			id: 1,
-			name: 'Item 1',
-			description: 'This is item 1'
-		},
-		{
-			id: 2,
-			name: 'Item 2',
-			description: 'This is item 2'
-		},
-		{
-			id: 3,
-			name: 'Item 3',
-			description: 'This is item 3'
-		},
-		{
-			id: 4,
-			name: 'Item 4',
-			description: 'This is item 4'
-		},
-		{
-			id: 5,
-			name: 'Item 5',
-			description: 'This is item 5'
-		},
-		{
-			id: 6,
-			name: 'Item 6',
-			description: 'This is item 6'
-		}
-	];
+import { DragDropContext, Droppable, Draggable, DropResult } from 'react-beautiful-dnd';
 
-	const tags = Array.from({ length: 50 }).map((_, i, a) => `v1.2.0-beta.${a.length - i}`);
+export function DragNDrop() {
+	const onDragEnd = (result: DropResult) => {
+		if (!result.destination) {
+			return; // Do nothing if there is no valid destination
+		}
+
+		const { source, destination } = result;
+
+		if (source.droppableId === destination.droppableId && source.index === destination.index) {
+			return; // Do nothing if the item was dropped in the same position
+		}
+
+		// Perform your desired logic based on the valid drag and drop operation
+		console.log(
+			`Item ${result.draggableId} was dropped into ${result.destination.droppableId}`
+		);
+	};
 
 	return (
-		<div className="w-full">
-			<div className="flex justify-center items-center">
-				<h2 className="text-2xl font-light mb-5">Drag and drop Menu!</h2>
-			</div>
-			<div className="grid grid-col-5 gap-4">
-				<div className="col-span-1">
-					<ScrollArea className="h-screen rounded-md border">
-						<div className="p-4">
-							{tags.map((tag) => (
-								<>
-									<div key={tag} className="text-sm">
-										{tag}
-									</div>
-									<Separator className="my-2" />
-								</>
-							))}
-						</div>
-					</ScrollArea>
+		<DragDropContext onDragEnd={onDragEnd}>
+			<div className="grid grid-cols-2">
+				{/* Left side - scrollable list */}
+				<div className="overflow-y-auto">
+					{/* Render your list of draggable items */}
+					{/* Example: */}
+					<Draggable draggableId="item1" index={0}>
+						{(provided) => (
+							<div
+								{...provided.draggableProps}
+								{...provided.dragHandleProps}
+								ref={provided.innerRef}
+							>
+								Item 1
+							</div>
+						)}
+					</Draggable>
+
+					{/* More items... */}
 				</div>
-				{/* <Separator orientation="vertical" /> */}
-				<div className="col-span-4 col-start-2">
-					<div className="border border-1 rounded-md h-full w-full"></div>
+
+				{/* Right side - menu */}
+				<div className="grid grid-cols-5 gap-4">
+					{/* Example: Render the Droppable areas */}
+					<Droppable droppableId="monday">
+						{(provided) => (
+							<div
+								{...provided.droppableProps}
+								ref={provided.innerRef}
+								className="bg-gray-300 p-4"
+							>
+								{/* Render Monday's slot */}
+								{provided.placeholder}
+							</div>
+						)}
+					</Droppable>
+
+					{/* Render other Droppable areas for the remaining days */}
+
+					{/* Tuesday */}
+
+					{/* Wednesday */}
+
+					{/* Thursday */}
+
+					{/* Friday */}
 				</div>
 			</div>
-		</div>
+		</DragDropContext>
 	);
 }
