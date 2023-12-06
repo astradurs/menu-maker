@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { postCourse } from './create-course';
 import { listCourses } from './list-courses';
+import { getUserById } from '../user/[email]/get-user';
 
 export async function POST(request: NextRequest) {
 	if (request === null) {
@@ -14,8 +15,19 @@ export async function POST(request: NextRequest) {
 		);
 	}
 	const { course, userId } = await request.json();
-	console.log('course', course);
-	console.log('userId', userId);
+
+	const user = await getUserById({ userId: userId });
+
+	if (user === null) {
+		return NextResponse.json(
+			{
+				error: 'No user'
+			},
+			{
+				status: 404
+			}
+		);
+	}
 
 	if (course === null || userId === null) {
 		return NextResponse.json(
@@ -28,7 +40,7 @@ export async function POST(request: NextRequest) {
 		);
 	}
 
-	const newCourse = await postCourse({ course, userId });
+	const newCourse = await postCourse({ course, user });
 
 	const response = NextResponse.json(newCourse, { status: 200 });
 

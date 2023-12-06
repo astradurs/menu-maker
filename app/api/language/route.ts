@@ -1,13 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { listAllergens } from './list-allergens';
+import { listLanguages } from './list-languages';
 
 export async function GET(request: NextRequest) {
-	const allergens = await listAllergens();
+	const languages = await listLanguages();
 
-	if (!allergens) {
+	if (!languages) {
 		return NextResponse.json(
 			{
-				error: 'No allergens'
+				error: 'No languages'
 			},
 			{
 				status: 404
@@ -15,7 +15,7 @@ export async function GET(request: NextRequest) {
 		);
 	}
 
-	const response = NextResponse.json(allergens, { status: 200 });
+	const response = NextResponse.json(languages, { status: 200 });
 
 	return response;
 }

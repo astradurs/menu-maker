@@ -30,7 +30,6 @@ export default async function DashboardPage() {
 		const response = await fetch(request);
 		const { user: reqUser } = await response.json();
 		dbUser = reqUser;
-		console.log('dbUser', dbUser);
 	}
 
 	if (!isAuthenticated) {
