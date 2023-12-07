@@ -11,7 +11,7 @@ import {
 export function SelectMenu() {
 	return (
 		<Select>
-			<SelectTrigger className="w-[100px]">
+			<SelectTrigger className="w-[220px]">
 				<SelectValue placeholder="Select a fruit" />
 			</SelectTrigger>
 			<SelectContent>
