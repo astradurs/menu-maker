@@ -56,13 +56,26 @@ export function Dropdown() {
 				</div>
 
 				<div className="border border-1 rounded-md h-full w-full">
-					<div className="grid grid-col-7 gap-1">
+					<div className="">
 						{daysOfWeek.map(({ id, day }) => (
-							<div key={id} className={`col-span-1 col-start-${id}`}>
-								<div className="p-1">
-									<p className="font-light">{day}</p>
-									<div>
-										<SelectMenu />
+							<div key={id} className="">
+								<div className="p-4">
+									<div className="flex justify-center items-center p-1 m-2">
+										<p className="text-2xl font-semibold">{day}</p>
+									</div>
+									<div className="flex justify-between">
+										<div>
+											<SelectMenu />
+										</div>
+										<div>
+											<SelectMenu />
+										</div>
+										<div>
+											<SelectMenu />
+										</div>
+										<div>
+											<SelectMenu />
+										</div>
 									</div>
 								</div>
 							</div>
