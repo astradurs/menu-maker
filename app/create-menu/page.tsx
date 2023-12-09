@@ -24,12 +24,7 @@ export default function MenuPage() {
 	// }
 
 	return (
-		<main className="min-h-screen p-4">
-			{/* <div className="flex items-center">
-					<p className="mr-2">Drag and drop </p>
-					<Switch id="dragndrop" onClick={() => setDragNDrop(false)} />
-					<p className="ml-2">Select and dropdowns</p>
-				</div> */}
+		<main className="min-h-screen w-screen">
 			<div>
 				{/* <DragNDrop /> */}
 				<Dropdown />

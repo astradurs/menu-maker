@@ -1,10 +1,47 @@
 'use client';
 
-import { ScrollArea } from '@/components/ui/scroll-area';
+import { useState } from 'react';
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
-import { SelectMenu } from '@/components/menu/select';
+import { AddCourseToDay } from '@/components/menu/add-course-to-day';
+import { Course } from '@/components/menu/course';
+import { AddCourseInfo } from '@/components/menu/add-course-info';
+
+import {
+	Dialog,
+	DialogContent,
+	DialogClose,
+	DialogDescription,
+	DialogFooter,
+	DialogHeader,
+	DialogTitle,
+	DialogTrigger
+} from '@/components/ui/dialog';
+import { Button } from '../ui/button';
 
 export function Dropdown() {
+	const [numberOfCourses, setNumberOfCourses] = useState([1, 2, 3, 4]);
+
+	const addCourse = () => {
+		if (numberOfCourses.length < maxNumber) {
+			const nextNumber = numberOfCourses.length + 1;
+			setNumberOfCourses([...numberOfCourses, nextNumber]);
+		}
+	};
+
+	// Ideally we want to set this in the settings!
+	const maxNumber = 6;
+
+	const daysOfWeek = [
+		{ id: 1, day: 'Monday' },
+		{ id: 2, day: 'Tuesday' },
+		{ id: 3, day: 'Wednesday' },
+		{ id: 4, day: 'Thursday' },
+		{ id: 5, day: 'Friday' },
+		{ id: 6, day: 'Saturday' },
+		{ id: 7, day: 'Sunday' }
+	];
+
 	const menuItems = [
 		{
 			id: 1,
@@ -38,33 +75,38 @@ export function Dropdown() {
 		}
 	];
 
-	const daysOfWeek = [
-		{ id: 1, day: 'Monday' },
-		{ id: 2, day: 'Tuesday' },
-		{ id: 3, day: 'Wednesday' },
-		{ id: 4, day: 'Thursday' },
-		{ id: 5, day: 'Friday' },
-		{ id: 6, day: 'Saturday' },
-		{ id: 7, day: 'Sunday' }
-	];
-
 	return (
 		<>
-			<div className="w-full">
+			<div className="overflow-x-hidden">
 				<div className="flex justify-center items-center">
 					<h2 className="text-2xl font-light mb-5">Drag and drop Menu!</h2>
 				</div>
 
-				<div className="border border-1 rounded-md h-full w-full">
-					<div className="grid grid-col-7 gap-1">
+				<div className="rounded-md h-full">
+					<div className="">
 						{daysOfWeek.map(({ id, day }) => (
-							<div key={id} className={`col-span-1 col-start-${id}`}>
-								<div className="p-1">
-									<p className="font-light">{day}</p>
-									<div>
-										<SelectMenu />
-									</div>
+							<div className="p-4" key={id}>
+								<div className="flex justify-center items-center p-1 m-2">
+									<p className="text-2xl font-semibold">{day}</p>
 								</div>
+								<ScrollArea className="w-screen">
+									<div className="flex items-center gap-2 mb-4">
+										{numberOfCourses.map((number) => (
+											<div key={number}>
+												<Course />
+												<ScrollBar orientation="horizontal" />
+											</div>
+										))}
+										{/* <AddCourseInfo /> */}
+										{numberOfCourses.length < maxNumber && (
+											<AddCourseToDay
+												addCourse={addCourse}
+												maxNumber={maxNumber - numberOfCourses.length}
+												day={day}
+											/>
+										)}
+									</div>
+								</ScrollArea>
 							</div>
 						))}
 					</div>
