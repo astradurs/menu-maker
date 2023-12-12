@@ -28,7 +28,9 @@ export default async function DashboardPage() {
 		});
 
 		const response = await fetch(request);
-		const { user: reqUser } = await response.json();
+		const { user: reqUser, status } = await response.json();
+		console.log('reqUser', reqUser);
+		console.log('status', status);
 		dbUser = reqUser;
 	}
 
