@@ -51,6 +51,7 @@ export function AddMenuItemForm() {
 						</FormItem>
 					)}
 				/>
+
 				<Button type="submit">Submit</Button>
 			</form>
 		</Form>

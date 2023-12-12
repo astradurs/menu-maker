@@ -60,6 +60,7 @@ export default async function ListCoursesPage() {
 	}
 
 	const dbUser = await getUserRequest({ email: authUser.email });
+	console.log('dbUser', dbUser);
 
 	if (dbUser === null || dbUser === undefined) {
 		const authKitUrl = getAuthUrl();
@@ -67,18 +68,18 @@ export default async function ListCoursesPage() {
 		return redirect(authKitUrl);
 	}
 
-	const courses = await listCoursesRequest();
+	// const courses = await listCoursesRequest();
 
 	return (
 		<div className="grid gap-2">
-			<div>
+			{/* <div>
 				<div className="p-1">
 					<Button asChild>
 						<Link href="/courses/create">Create Course</Link>
 					</Button>
 				</div>
 			</div>
-			<ListCoursesTabs user={dbUser} />;
+			<ListCoursesTabs user={dbUser} />; */}
 		</div>
 	);
 }
