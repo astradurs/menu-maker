@@ -25,9 +25,9 @@ export async function getUserRequest({ email }: { email: string }): Promise<User
 	});
 
 	const response = await fetch(request, {
-		next: {
-			tags: ['get-user']
-		}
+		// next: {
+		// 	tags: ['get-user']
+		// }
 	});
 	console.log('REPONSE', response);
 	console.log('===========');

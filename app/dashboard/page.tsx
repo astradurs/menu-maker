@@ -26,8 +26,9 @@ export default async function DashboardPage() {
 				'Content-Type': 'application/json'
 			}
 		});
-
+		console.log('request', request);
 		const response = await fetch(request);
+		console.log('response', response);
 		const { user: reqUser, status } = await response.json();
 		console.log('reqUser', reqUser);
 		console.log('status', status);
