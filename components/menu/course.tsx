@@ -12,6 +12,16 @@ import {
 	DialogTitle,
 	DialogTrigger
 } from '@/components/ui/dialog';
+import {
+	Drawer,
+	DrawerClose,
+	DrawerContent,
+	DrawerDescription,
+	DrawerFooter,
+	DrawerHeader,
+	DrawerTitle,
+	DrawerTrigger
+} from '@/components/ui/drawer';
 import { Button } from '@/components/ui/button';
 
 export function Course() {
@@ -24,40 +34,30 @@ export function Course() {
 					<p>Description</p>
 				</div>
 				<div className="absolute bottom-0 right-0 p-2 hover:border rounded-md m-1 flex items-center justify-center">
-					<Dialog>
-						<DialogTrigger>
+					<Drawer>
+						<DrawerTrigger>
 							<div className="flex items-center">
 								<p className="text-sm mr-2">edit</p>
 								<MagicWandIcon className="self-end w-5 h-5" />
 							</div>
-						</DialogTrigger>
-						<DialogContent>
-							<DialogHeader>
-								<DialogTitle>Edit course!</DialogTitle>
-							</DialogHeader>
-							<DialogDescription>
-								By editing course, you will be able to change the name, description
-								and price of the course.
-							</DialogDescription>
-
-							<AddMenuItemForm />
-
-							<DialogFooter>
-								<DialogClose asChild>
-									<Button className="mt-4" variant="secondary">
-										Cancel
-									</Button>
-								</DialogClose>
-								<Button
-									className="mt-4"
-									variant="default"
-									onClick={() => console.log('EDIT COURSE')}
-								>
-									Yes
-								</Button>
-							</DialogFooter>
-						</DialogContent>
-					</Dialog>
+						</DrawerTrigger>
+						<DrawerContent>
+							<DrawerHeader>
+								<DrawerTitle>Here you can select course</DrawerTitle>
+								<DrawerDescription>
+									you can use the filter below to put constraints on what you
+									want.
+								</DrawerDescription>
+							</DrawerHeader>
+							<DrawerContent>Form</DrawerContent>
+							<DrawerFooter>
+								<Button>Submit</Button>
+								<DrawerClose>
+									<Button variant="outline">Cancel</Button>
+								</DrawerClose>
+							</DrawerFooter>
+						</DrawerContent>
+					</Drawer>
 				</div>
 			</div>
 		</div>
