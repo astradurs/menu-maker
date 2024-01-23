@@ -66,11 +66,11 @@ export function CreateCourseForm({
 
 	async function onSubmit(values: z.infer<typeof formSchema>) {
 		console.log('THE VALUES', values);
-		// await postCourseRequest({
-		// 	course: values,
-		// 	userId
-		// });
-		// submit();
+		await postCourseRequest({
+			course: values,
+			userId
+		});
+		submit();
 	}
 
 	const handleAllergenChangeFromIngredient = (iUuid: string) => {
