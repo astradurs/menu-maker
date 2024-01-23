@@ -3,16 +3,6 @@
 import { MagicWandIcon } from '@radix-ui/react-icons';
 import { AddMenuItemForm } from '@/components/forms/menu/add-menu-item';
 import {
-	Dialog,
-	DialogContent,
-	DialogClose,
-	DialogDescription,
-	DialogFooter,
-	DialogHeader,
-	DialogTitle,
-	DialogTrigger
-} from '@/components/ui/dialog';
-import {
 	Drawer,
 	DrawerClose,
 	DrawerContent,
