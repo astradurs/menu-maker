@@ -14,6 +14,8 @@ import {
 	FormLabel,
 	FormMessage
 } from '@/components/ui/form';
+import { Separator } from '@/components/ui/separator';
+import { AllergenList } from '@/components/forms/menu/allergen-list';
 
 const formSchema = z.object({
 	title: z.string().min(2, {
@@ -34,6 +36,21 @@ export function AddMenuItemForm() {
 		// const result = await submit(values, userId);
 	};
 
+	const allergens = [
+		{ id: 1, name: 'Gluten' },
+		{ id: 2, name: 'Lactose' },
+		{ id: 3, name: 'Egg' },
+		{ id: 4, name: 'Peanut' },
+		{ id: 5, name: 'Soy' },
+		{ id: 6, name: 'Fish' },
+		{ id: 7, name: 'Shellfish' },
+		{ id: 8, name: 'Tree nut' },
+		{ id: 9, name: 'Sesame' },
+		{ id: 10, name: 'Celery' },
+		{ id: 11, name: 'Mustard' },
+		{ id: 12, name: 'Sulphite' }
+	];
+
 	return (
 		<Form {...form}>
 			<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -46,7 +63,11 @@ export function AddMenuItemForm() {
 							<FormControl>
 								<Input placeholder="pulsa" {...field} />
 							</FormControl>
-							<FormDescription>This is your public display name.</FormDescription>
+							<Separator />
+							<AllergenList allergens={allergens} />
+							<FormDescription>
+								Here you can select a course to add to the menu
+							</FormDescription>
 							<FormMessage />
 						</FormItem>
 					)}
