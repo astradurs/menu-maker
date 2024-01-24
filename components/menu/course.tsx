@@ -39,7 +39,9 @@ export function Course() {
 									want.
 								</DrawerDescription>
 							</DrawerHeader>
-							<DrawerContent>Form</DrawerContent>
+							<div className="p-4">
+								<AddMenuItemForm />
+							</div>
 							<DrawerFooter>
 								<Button>Submit</Button>
 								<DrawerClose>
