@@ -21,7 +21,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 
-interface User {
+export interface User {
 	uuid: string;
 	email: string;
 	firstName: string | null;
@@ -84,7 +84,7 @@ export default async function ListCoursesPage() {
 	);
 }
 
-async function ListCoursesTabs({ user }: { user: User }) {
+export async function ListCoursesTabs({ user }: { user: User }) {
 	const { team } = user;
 	if (team === null || team === undefined) {
 		return <ListUserCoursesTable user={user} />;
