@@ -19,7 +19,7 @@ import {
 } from '@/components/ui/dialog';
 import { Button } from '../ui/button';
 
-export function Dropdown() {
+export function Menu() {
 	const [numberOfCourses, setNumberOfCourses] = useState([1, 2, 3, 4]);
 
 	const addCourse = () => {
@@ -78,42 +78,34 @@ export function Dropdown() {
 	return (
 		<>
 			<div className="overflow-x-hidden">
-				<div className="flex justify-center items-center">
-					<h2 className="text-2xl font-light mb-5">Drag and drop Menu!</h2>
-				</div>
-
 				<div className="rounded-md h-full">
-					<div className="">
-						{daysOfWeek.map(({ id, day }) => (
-							<div className="p-4" key={id}>
-								<div className="flex justify-center items-center p-1 m-2">
-									<p className="text-2xl font-semibold">{day}</p>
-								</div>
-								<ScrollArea className="w-screen">
-									<div className="flex items-center gap-2 mb-4">
-										{numberOfCourses.map((number) => (
-											<div key={number}>
-												<Course />
-												<ScrollBar orientation="horizontal" />
-											</div>
-										))}
-										{/* <AddCourseInfo /> */}
-										{numberOfCourses.length < maxNumber && (
-											<AddCourseToDay
-												addCourse={addCourse}
-												maxNumber={maxNumber - numberOfCourses.length}
-												day={day}
-											/>
-										)}
+					<div>
+						<ScrollArea className="w-screen">
+							{daysOfWeek.map(({ id, day }) => (
+								<div className="p-4" key={id}>
+									<div className="flex justify-center items-center p-1 m-2">
+										<p className="text-2xl font-semibold">{day}</p>
 									</div>
-								</ScrollArea>
-							</div>
-						))}
-					</div>
-					<div className="mt-4">
-						<Separator />
-						<ScrollArea className="h-screen rounded-md border">
-							<div className="p-4">Filters</div>
+									<ScrollArea className="w-screen">
+										<div className="flex items-center gap-2 mb-4">
+											{numberOfCourses.map((number) => (
+												<div key={number}>
+													<Course />
+													<ScrollBar orientation="horizontal" />
+												</div>
+											))}
+											{/* <AddCourseInfo /> */}
+											{numberOfCourses.length < maxNumber && (
+												<AddCourseToDay
+													addCourse={addCourse}
+													maxNumber={maxNumber - numberOfCourses.length}
+													day={day}
+												/>
+											)}
+										</div>
+									</ScrollArea>
+								</div>
+							))}
 						</ScrollArea>
 					</div>
 				</div>
