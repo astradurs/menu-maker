@@ -20,7 +20,7 @@ export function Course() {
 			<div className="relative flex border items-center justify-center p-1 rounded-md h-44 w-72">
 				<div className="flex flex-col p-1">
 					<p>Restaurant!!</p>
-					<p>Short Descripiton</p>
+					<p>Short Description</p>
 					<p>Description</p>
 				</div>
 				<div className="absolute bottom-0 right-0 p-2 hover:border rounded-md m-1 flex items-center justify-center">
@@ -35,7 +35,7 @@ export function Course() {
 							<DrawerHeader>
 								<DrawerTitle>Here you can select course</DrawerTitle>
 								<DrawerDescription>
-									you can use the filter below to put constraints on what you
+									You can use the filter below to put constraints on what you
 									want.
 								</DrawerDescription>
 							</DrawerHeader>
@@ -43,8 +43,7 @@ export function Course() {
 								<AddMenuItemForm />
 							</div>
 							<DrawerFooter>
-								<Button>Submit</Button>
-								<DrawerClose>
+								<DrawerClose asChild>
 									<Button variant="outline">Cancel</Button>
 								</DrawerClose>
 							</DrawerFooter>

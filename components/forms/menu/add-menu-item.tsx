@@ -16,6 +16,7 @@ import {
 } from '@/components/ui/form';
 import { Separator } from '@/components/ui/separator';
 import { AllergenList } from '@/components/forms/menu/allergen-list';
+import { ComboboxDemo } from './combo-box';
 
 const formSchema = z.object({
 	title: z.string().min(2, {
@@ -51,6 +52,29 @@ export function AddMenuItemForm() {
 		{ id: 12, name: 'Sulphite' }
 	];
 
+	const frameWorks = [
+		{
+			value: 'bragdlaukar',
+			label: 'Bragðlaukar'
+		},
+		{
+			value: 'hradlestin',
+			label: 'Hraðlestin'
+		},
+		{
+			value: 'matarkompani',
+			label: 'Matarkompaní'
+		},
+		{
+			value: 'puredeli',
+			label: 'Pure Deli'
+		},
+		{
+			value: 'serrano',
+			label: 'Serrano'
+		}
+	];
+
 	return (
 		<Form {...form}>
 			<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -59,12 +83,16 @@ export function AddMenuItemForm() {
 					name="title"
 					render={({ field }) => (
 						<FormItem>
-							<FormLabel>Title</FormLabel>
+							<FormLabel className="mr-2">Restaurant name</FormLabel>
 							<FormControl>
-								<Input placeholder="pulsa" {...field} />
+								<ComboboxDemo title={'Select restaurant...'} data={frameWorks} />
 							</FormControl>
-							<Separator />
-							<AllergenList allergens={allergens} />
+
+							<FormLabel className="mr-2">Restaurant name</FormLabel>
+							<FormControl>
+								<ComboboxDemo title={'Select restaurant...'} data={frameWorks} />
+							</FormControl>
+							{/* <AllergenList allergens={allergens} /> */}
 							<FormDescription>
 								Here you can select a course to add to the menu
 							</FormDescription>
