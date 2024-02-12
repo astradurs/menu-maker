@@ -2,22 +2,7 @@
 
 import { useState } from 'react';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
-import { Separator } from '@/components/ui/separator';
-import { AddCourseToDay } from '@/components/menu/add-course-to-day';
 import { Course } from '@/components/menu/course';
-import { AddCourseInfo } from '@/components/menu/add-course-info';
-
-import {
-	Dialog,
-	DialogContent,
-	DialogClose,
-	DialogDescription,
-	DialogFooter,
-	DialogHeader,
-	DialogTitle,
-	DialogTrigger
-} from '@/components/ui/dialog';
-import { Button } from '../ui/button';
 
 export function Menu() {
 	const [numberOfCourses, setNumberOfCourses] = useState([1, 2, 3, 4]);
@@ -77,7 +62,7 @@ export function Menu() {
 
 	return (
 		<>
-			<div className="overflow-x-hidden">
+			<div className="max-w-fit overflow-x-hidden">
 				<div className="rounded-md h-full">
 					<div>
 						<ScrollArea className="w-screen">
@@ -94,14 +79,7 @@ export function Menu() {
 													<ScrollBar orientation="horizontal" />
 												</div>
 											))}
-											{/* <AddCourseInfo /> */}
-											{numberOfCourses.length < maxNumber && (
-												<AddCourseToDay
-													addCourse={addCourse}
-													maxNumber={maxNumber - numberOfCourses.length}
-													day={day}
-												/>
-											)}
+											{numberOfCourses.length < maxNumber && <p>yes</p>}
 										</div>
 									</ScrollArea>
 								</div>
