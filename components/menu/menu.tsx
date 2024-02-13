@@ -75,11 +75,11 @@ export function Menu() {
 										<div className="flex items-center gap-2 mb-4">
 											{numberOfCourses.map((number) => (
 												<div key={number}>
-													<Course />
+													<Course day={day} />
 													<ScrollBar orientation="horizontal" />
 												</div>
 											))}
-											{numberOfCourses.length < maxNumber && <p>yes</p>}
+											{/* {numberOfCourses.length < maxNumber && <p>yes</p>} */}
 										</div>
 									</ScrollArea>
 								</div>

@@ -14,7 +14,7 @@ import {
 } from '@/components/ui/drawer';
 import { Button } from '@/components/ui/button';
 
-export function Course() {
+export function Course({ day }) {
 	return (
 		<div>
 			<div className="relative flex border items-center justify-center p-1 rounded-md h-44 w-72">
@@ -33,7 +33,7 @@ export function Course() {
 						</DrawerTrigger>
 						<DrawerContent>
 							<DrawerHeader>
-								<DrawerTitle>Here you can select course</DrawerTitle>
+								<DrawerTitle>Select course for {day}</DrawerTitle>
 								<DrawerDescription>
 									You can use the filter below to put constraints on what you
 									want.
@@ -43,9 +43,9 @@ export function Course() {
 								<AddMenuItemForm />
 							</div>
 							<DrawerFooter>
-								<DrawerClose asChild>
+								{/* <DrawerClose asChild>
 									<Button variant="outline">Cancel</Button>
-								</DrawerClose>
+								</DrawerClose> */}
 							</DrawerFooter>
 						</DrawerContent>
 					</Drawer>
