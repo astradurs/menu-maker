@@ -21,7 +21,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 
-interface User {
+export interface User {
 	uuid: string;
 	email: string;
 	firstName: string | null;
@@ -60,6 +60,7 @@ export default async function ListCoursesPage() {
 	}
 
 	const dbUser = await getUserRequest({ email: authUser.email });
+	console.log('dbUser', dbUser);
 
 	if (dbUser === null || dbUser === undefined) {
 		const authKitUrl = getAuthUrl();
@@ -78,12 +79,12 @@ export default async function ListCoursesPage() {
 					</Button>
 				</div>
 			</div>
-			<ListCoursesTabs user={dbUser} />;
+			<ListCoursesTabs user={dbUser} />
 		</div>
 	);
 }
 
-async function ListCoursesTabs({ user }: { user: User }) {
+export async function ListCoursesTabs({ user }: { user: User }) {
 	const { team } = user;
 	if (team === null || team === undefined) {
 		return <ListUserCoursesTable user={user} />;
