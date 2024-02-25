@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import { Course } from '@/components/menu/course';
 
 export function Menu() {
@@ -65,26 +64,20 @@ export function Menu() {
 			<div className="max-w-fit overflow-x-hidden">
 				<div className="rounded-md h-full">
 					<div>
-						<ScrollArea className="w-screen">
-							{daysOfWeek.map(({ id, day }) => (
-								<div className="p-4" key={id}>
-									<div className="flex justify-center items-center p-1 m-2">
-										<p className="text-2xl font-semibold">{day}</p>
-									</div>
-									<ScrollArea className="w-screen">
-										<div className="flex items-center gap-2 mb-4">
-											{numberOfCourses.map((number) => (
-												<div key={number}>
-													<Course day={day} />
-													<ScrollBar orientation="horizontal" />
-												</div>
-											))}
-											{/* {numberOfCourses.length < maxNumber && <p>yes</p>} */}
-										</div>
-									</ScrollArea>
+						{daysOfWeek.map(({ id, day }) => (
+							<div className="p-4" key={id}>
+								<div className="flex justify-center items-center p-1 m-2">
+									<p className="text-2xl font-semibold">{day}</p>
 								</div>
-							))}
-						</ScrollArea>
+								<div className="flex items-center gap-2 mb-4">
+									{numberOfCourses.map((number) => (
+										<div key={number}>
+											<Course day={day} />
+										</div>
+									))}
+								</div>
+							</div>
+						))}
 					</div>
 				</div>
 			</div>

@@ -14,10 +14,10 @@ export function MainNav({ className, ...props }: React.HTMLAttributes<HTMLElemen
 				Dashboard
 			</Link>
 			<Link
-				href="/create-menu"
+				href="/menu"
 				className={`text-sm font-medium transition-colors hover:text-primary`}
 			>
-				Create menu
+				Menu
 			</Link>
 			<Link
 				href="/courses"
