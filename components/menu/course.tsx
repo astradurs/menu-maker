@@ -14,7 +14,7 @@ import {
 } from '@/components/ui/drawer';
 import { Button } from '@/components/ui/button';
 
-export function Course({ day }) {
+export function Course({ day }: { day: string }) {
 	return (
 		<div>
 			<div className="relative flex border items-center justify-center p-1 rounded-md h-44 w-72">
