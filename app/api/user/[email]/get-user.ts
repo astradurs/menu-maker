@@ -6,7 +6,6 @@ export interface User {
 	email: string;
 	firstName: string | null;
 	lastName: string | null;
-	teamUuid: string | null;
 }
 
 export async function getUserRequest({ email }: { email: string }): Promise<User | null> {

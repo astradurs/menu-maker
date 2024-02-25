@@ -6,7 +6,14 @@ import { Button } from '../ui/button';
 
 export function Menu() {
 	const [menu_items, setMenuItems] = useState<MenuItemType[]>([]);
-
+	const submitMenu = () => {
+		console.log('submitting menu', menu_items);
+		const body = JSON.stringify({ menuItems: menu_items });
+		fetch('/api/menu', {
+			method: 'POST',
+			body
+		});
+	};
 	const daysOfWeek = [
 		{ weekday_number: 1, day: 'Monday' },
 		{ weekday_number: 2, day: 'Tuesday' },
@@ -61,6 +68,7 @@ export function Menu() {
 								</div>
 							);
 						})}
+						<Button onClick={() => submitMenu()}>Submit menu</Button>
 					</div>
 				</div>
 			</div>

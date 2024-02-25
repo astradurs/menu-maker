@@ -21,15 +21,16 @@ model MenuItem {
   uuid              String              @id @default(cuid())
   createdAt         DateTime            @default(now()) @db.Timestamp(6)
   updatedAt         DateTime            @default(now()) @updatedAt @db.Timestamp(6)
-  title            String              @db.VarChar(255)
-  description      String?             @db.Text
-  menu            Menu                @relation("MenuItems", fields: [menuUuid], references: [uuid])
-  menuUuid         String              @db.VarChar(255)
+  title             String              @db.VarChar(255)
+  description       String?             @db.Text
+  weekdayNumber     Int                 
+  menu              Menu                @relation(fields: [menuUuid], references: [uuid])
+  menuUuid          String              @db.VarChar(255)
 }
 model Menu {
   uuid               String              @id @default(cuid())
   createdAt          DateTime            @default(now()) @db.Timestamp(6)
   updatedAt          DateTime            @default(now()) @updatedAt @db.Timestamp(6)
-  menuItems         MenuItem[]         @relation("MenuItems")
+  menuItems         MenuItem[]
 }
 
