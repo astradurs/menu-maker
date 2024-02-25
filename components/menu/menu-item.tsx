@@ -17,6 +17,8 @@ import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 
 const MenuItemFormSchema = z.object({
+	uuid: z.string(),
+	weekday_number: z.number(),
 	menu_item_title: z.string(),
 	menu_item_description: z.string()
 });
@@ -108,27 +110,28 @@ function MenuItemForm({
 	const form = useForm<z.infer<typeof MenuItemFormSchema>>({
 		resolver: zodResolver(MenuItemFormSchema),
 		defaultValues: {
+			uuid: menu_item.uuid,
+			weekday_number: menu_item.weekday_number,
 			menu_item_title: menu_item.menu_item_title,
 			menu_item_description: menu_item.menu_item_description
 		}
 	});
 
 	const onSubmit = (values: z.infer<typeof MenuItemFormSchema>) => {
-		console.log(values);
-		console.log('menu_items', menu_items);
+		console.log('menu_item value', values);
+		console.log('old menu_items', menu_items);
 		const newMenuItems = menu_items.map((c) => {
-			if (c.uuid === menu_item.uuid) {
+			if (c.uuid === values.uuid) {
 				return {
 					...c,
-					...values,
-					weekday_number
+					...values
 				};
 			}
 			return c;
 		});
 		setMenuItems(newMenuItems);
 		setIsEditing(false);
-		console.log('newMenuItems', newMenuItems);
+		console.log('new menu_items', newMenuItems);
 	};
 
 	const onDelete = () => {
@@ -169,6 +172,7 @@ function MenuItemForm({
 						);
 					}}
 				/>
+
 				<Button type="submit">+</Button>
 				<Button variant="destructive" type="button" onClick={onDelete}>
 					-
