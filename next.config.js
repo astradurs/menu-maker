@@ -2,7 +2,7 @@
 const nextConfig = {
 	reactStrictMode: false, // does this help dnd?
 	env: {
-		API_URL: process.env.API_URL
+		API_HOST: process.env.API_HOST
 	}
 };
 

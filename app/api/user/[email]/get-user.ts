@@ -10,7 +10,7 @@ export interface User {
 }
 
 export async function getUserRequest({ email }: { email: string }): Promise<User | null> {
-	const request = new NextRequest(`${process.env.API_URL}/user/${email}`, {
+	const request = new NextRequest(`${process.env.API_HOST}/user/${email}`, {
 		method: 'GET',
 		headers: {
 			'Content-Type': 'application/json'

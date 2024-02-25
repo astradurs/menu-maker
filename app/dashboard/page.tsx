@@ -20,7 +20,7 @@ export default async function DashboardPage() {
 
 	let dbUser = null;
 	if (authUser !== null && authUser !== undefined) {
-		const request = new NextRequest(`${process.env.API_URL}/user/${authUser.email}`, {
+		const request = new NextRequest(`${process.env.API_HOST}/user/${authUser.email}`, {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json'
