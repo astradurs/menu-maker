@@ -1,15 +1,12 @@
 import { Metadata } from 'next';
-import { redirect } from 'next/navigation';
-import { getUser, getAuthUrl } from '@/app/auth';
 import { Menu } from '@/components/menu/menu';
-import { getUserRequest } from '../api/user/[email]/get-user';
 
 export const metadata: Metadata = {
 	title: 'Menu',
 	description: 'The page where you build your menu!'
 };
 
-export default async function MenuPage() {
+export default async function MenuPage({ params }: { params: { uuid: string } }) {
 	// const { isAuthenticated, user: authUser } = await getUser();
 
 	// if (!isAuthenticated || authUser === null || authUser === undefined) {
@@ -27,7 +24,11 @@ export default async function MenuPage() {
 	// 	return redirect(authKitUrl);
 	// }
 
-	const newMenuUuid = crypto.randomUUID();
+	const menuUuid = params.uuid;
 
-	return redirect(`/menu/${newMenuUuid}`);
+	return (
+		<main className="min-h-screen w-screen">
+			<Menu menuUuid={menuUuid} />
+		</main>
+	);
 }

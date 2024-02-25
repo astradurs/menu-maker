@@ -4,9 +4,9 @@ import { useState } from 'react';
 import { MenuItemType, MenuItem } from '@/components/menu/menu-item';
 import { Button } from '../ui/button';
 
-export function Menu() {
+export function Menu({ menuUuid }: { menuUuid: string }) {
+	console.log('MENU', menuUuid);
 	const [menu_items, setMenuItems] = useState<MenuItemType[]>([]);
-	const menuUuid = crypto.randomUUID();
 	const submitMenu = () => {
 		console.log('submitting menu', menu_items);
 		const body = JSON.stringify({ menuUuid, menuItems: menu_items });
