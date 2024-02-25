@@ -9,8 +9,6 @@ export async function SharedNav() {
 	const { isAuthenticated, user } = await getUser();
 	const authKitUrl = getAuthUrl();
 
-	console.log('User', user);
-
 	return (
 		<div className="border-b">
 			<div className="flex h-16 items-center px-4">

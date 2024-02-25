@@ -1,6 +1,6 @@
 export async function Footer() {
 	return (
-		<div className="border-t">
+		<footer className="border-t">
 			<div className="flex h-16 items-center justify-center px-4">
 				<div className="flex">
 					<p>
@@ -19,6 +19,6 @@ export async function Footer() {
 					</p>
 				</div>
 			</div>
-		</div>
+		</footer>
 	);
 }

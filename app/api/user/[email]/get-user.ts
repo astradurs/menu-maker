@@ -25,12 +25,19 @@ export async function getUserRequest({ email }: { email: string }): Promise<User
 	});
 
 	const response = await fetch(request, {
-		next: {
-			tags: ['get-user']
-		}
+		// next: {
+		// 	tags: ['get-user']
+		// }
 	});
+	console.log('REPONSE', response);
+	console.log('===========');
+	const { status } = response;
+	if (status === 404) {
+		console.log('404 😓');
+	}
+	console.log('STATUS', status);
 	const { user } = await response.json();
-
+	// console.log('USER', user);
 	return user;
 }
 
@@ -66,6 +73,8 @@ export async function getUser({ email }: { email: string }): Promise<User | null
 			team: true
 		}
 	});
+
+	console.log('USER IN GET USER', user);
 
 	if (!user) {
 		const publicUser = await prisma.user.findUnique({
