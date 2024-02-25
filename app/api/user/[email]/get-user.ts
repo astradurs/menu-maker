@@ -7,13 +7,6 @@ export interface User {
 	firstName: string | null;
 	lastName: string | null;
 	teamUuid: string | null;
-	team: Team | null;
-}
-
-export interface Team {
-	uuid: string;
-	id: string;
-	name: string;
 }
 
 export async function getUserRequest({ email }: { email: string }): Promise<User | null> {
@@ -47,9 +40,6 @@ export async function getUserById({ userId }: { userId: string }): Promise<User 
 	const user = await prisma.user.findUnique({
 		where: {
 			uuid: userId
-		},
-		include: {
-			team: true
 		}
 	});
 
@@ -68,9 +58,6 @@ export async function getUser({ email }: { email: string }): Promise<User | null
 	const user = await prisma.user.findUnique({
 		where: {
 			email
-		},
-		include: {
-			team: true
 		}
 	});
 
@@ -80,15 +67,6 @@ export async function getUser({ email }: { email: string }): Promise<User | null
 		const publicUser = await prisma.user.findUnique({
 			where: {
 				email: 'guest@dev.menumaker.com'
-			},
-			include: {
-				team: {
-					select: {
-						uuid: true,
-						id: true,
-						name: true
-					}
-				}
 			}
 		});
 		await prisma.$disconnect();
