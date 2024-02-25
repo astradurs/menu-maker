@@ -2,7 +2,6 @@ import { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 import { getUser, getAuthUrl } from '@/app/auth';
 import { Menu } from '@/components/menu/menu';
-import { ListCourses } from '@/components/menu/list-courses';
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@/components/ui/resizable';
 import { getUserRequest } from '../api/user/[email]/get-user';
 
@@ -36,20 +35,6 @@ export default async function MenuPage() {
 					<Menu />
 				</ResizablePanel>
 				<ResizableHandle withHandle />
-				<ResizablePanel defaultSize={25} className="border rounded-lg min-w-10">
-					<div className="p-4">
-						<div>
-							<div className="h-1/2">
-								<h3 className="text-2xl font-light">Courses</h3>
-								<ListCourses user={dbUser} />
-							</div>
-							<div className="h-1/2">
-								<h3 className="text-2xl font-light">Filter</h3>
-								<ListCourses user={dbUser} />
-							</div>
-						</div>
-					</div>
-				</ResizablePanel>
 			</ResizablePanelGroup>
 		</main>
 	);
