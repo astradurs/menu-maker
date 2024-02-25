@@ -10,7 +10,7 @@ export async function createMenu({
 }) {
 	const func = 'createMenu';
 
-	const dbMenuItems = menuItems.map((menuItem) => {
+	const effectiveMenuItems = menuItems.map((menuItem) => {
 		return {
 			title: menuItem.menu_item_title,
 			description: menuItem.menu_item_description,
@@ -20,7 +20,7 @@ export async function createMenu({
 		};
 	});
 
-	console.log(func, dbMenuItems);
+	console.log(func, effectiveMenuItems);
 	const menu = await prisma.menu.findUnique({
 		where: {
 			uuid: menuUuid
@@ -31,6 +31,7 @@ export async function createMenu({
 	});
 
 	if (!menu) {
+		console.log('menu not found, creating menu');
 		const createdMenu = await prisma.menu.create({
 			data: {
 				uuid: menuUuid
@@ -38,7 +39,7 @@ export async function createMenu({
 		});
 
 		const createdMenuItems = await prisma.menuItem.createMany({
-			data: dbMenuItems
+			data: effectiveMenuItems
 		});
 
 		return {
@@ -46,28 +47,39 @@ export async function createMenu({
 			menuItems: createdMenuItems
 		};
 	}
+	console.log('menu found, updating menu', { menu });
 
 	const menuMenuItems = menu.menuItems;
+	console.log('menuMenuItems', { menuMenuItems });
 
-	const newMenuItems = dbMenuItems.filter((menuItem) => {
-		return !menuMenuItems.some((menuMenuItem) => {
-			return menuMenuItem.uuid === menuItem.uuid;
-		});
-	});
+	const menuItemsToCreate = effectiveMenuItems.filter(
+		(menuItem) => !menuMenuItems.some((menuMenuItem) => menuMenuItem.uuid === menuItem.uuid)
+	);
 
-	const oldMenuItems = menuMenuItems.filter((menuItem) => {
-		return !dbMenuItems.some((menuMenuItem) => {
-			return menuMenuItem.uuid === menuItem.uuid;
-		});
-	});
-
+	console.log('creating menu items', menuItemsToCreate);
 	const createdMenuItems = await prisma.menuItem.createMany({
-		data: newMenuItems
+		data: menuItemsToCreate
 	});
 
-	const updatedMenuItems = await prisma.menuItem.updateMany({
-		data: oldMenuItems
+	const menuItemsToUpdate = effectiveMenuItems.filter((menuItem) =>
+		menuMenuItems.some((menuMenuItem) => menuMenuItem.uuid === menuItem.uuid)
+	);
+
+	console.log('updating menu items', menuItemsToUpdate);
+	const updatePromises = menuItemsToUpdate.map((menuItem) => {
+		return prisma.menuItem.update({
+			where: {
+				uuid: menuItem.uuid
+			},
+			data: {
+				title: menuItem.title,
+				description: menuItem.description,
+				weekdayNumber: menuItem.weekdayNumber
+			}
+		});
 	});
+
+	const updatedMenuItems = await Promise.all(updatePromises);
 
 	return {
 		...menu,
