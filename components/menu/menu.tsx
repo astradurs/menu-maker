@@ -6,9 +6,10 @@ import { Button } from '../ui/button';
 
 export function Menu() {
 	const [menu_items, setMenuItems] = useState<MenuItemType[]>([]);
+	const menuUuid = crypto.randomUUID();
 	const submitMenu = () => {
 		console.log('submitting menu', menu_items);
-		const body = JSON.stringify({ menuItems: menu_items });
+		const body = JSON.stringify({ menuUuid, menuItems: menu_items });
 		fetch('/api/menu', {
 			method: 'POST',
 			body
