@@ -2,7 +2,6 @@ import { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 import { getUser, getAuthUrl } from '@/app/auth';
 import { Menu } from '@/components/menu/menu';
-import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@/components/ui/resizable';
 import { getUserRequest } from '../api/user/[email]/get-user';
 
 export const metadata: Metadata = {
@@ -30,12 +29,7 @@ export default async function MenuPage() {
 
 	return (
 		<main className="min-h-screen w-screen">
-			<ResizablePanelGroup direction="horizontal">
-				<ResizablePanel defaultSize={75} className="border rounded-lg">
-					<Menu />
-				</ResizablePanel>
-				<ResizableHandle withHandle />
-			</ResizablePanelGroup>
+			<Menu />
 		</main>
 	);
 }
