@@ -2,7 +2,6 @@ import { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 import { getUser, getAuthUrl } from '@/app/auth';
 import { Menu } from '@/components/menu/menu';
-import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@/components/ui/resizable';
 import { getUserRequest } from '../api/user/[email]/get-user';
 
 export const metadata: Metadata = {
@@ -11,31 +10,26 @@ export const metadata: Metadata = {
 };
 
 export default async function MenuPage() {
-	// const { isAuthenticated, user: authUser } = await getUser();
+	const { isAuthenticated, user: authUser } = await getUser();
 
-	// if (!isAuthenticated || authUser === null || authUser === undefined) {
-	// 	const authKitUrl = getAuthUrl();
+	if (!isAuthenticated || authUser === null || authUser === undefined) {
+		const authKitUrl = getAuthUrl();
 
-	// 	return redirect(authKitUrl);
-	// }
+		return redirect(authKitUrl);
+	}
 
-	// const dbUser = await getUserRequest({ email: authUser.email });
-	// console.log('dbUser', dbUser);
+	const dbUser = await getUserRequest({ email: authUser.email });
+	console.log('dbUser', dbUser);
 
-	// if (dbUser === null || dbUser === undefined) {
-	// 	const authKitUrl = getAuthUrl();
+	if (dbUser === null || dbUser === undefined) {
+		const authKitUrl = getAuthUrl();
 
-	// 	return redirect(authKitUrl);
-	// }
+		return redirect(authKitUrl);
+	}
 
 	return (
 		<main className="min-h-screen w-screen">
-			<ResizablePanelGroup direction="horizontal">
-				<ResizablePanel defaultSize={75} className="border rounded-lg">
-					<Menu />
-				</ResizablePanel>
-				<ResizableHandle withHandle />
-			</ResizablePanelGroup>
+			<Menu />
 		</main>
 	);
 }
