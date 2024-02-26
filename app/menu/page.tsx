@@ -27,9 +27,7 @@ export default async function MenuPage() {
 		return redirect(authKitUrl);
 	}
 
-	return (
-		<main className="min-h-screen w-screen">
-			<Menu />
-		</main>
-	);
+	const newMenuUuid = crypto.randomUUID();
+
+	return redirect(`/menu/${newMenuUuid}`);
 }
