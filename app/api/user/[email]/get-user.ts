@@ -21,15 +21,11 @@ export async function getUserRequest({ email }: { email: string }): Promise<User
 		// 	tags: ['get-user']
 		// }
 	});
-	console.log('REPONSE', response);
-	console.log('===========');
 	const { status } = response;
 	if (status === 404) {
 		console.log('404 😓');
 	}
-	console.log('STATUS', status);
 	const { user } = await response.json();
-	// console.log('USER', user);
 	return user;
 }
 
@@ -59,8 +55,6 @@ export async function getUser({ email }: { email: string }): Promise<User | null
 			email
 		}
 	});
-
-	console.log('USER IN GET USER', user);
 
 	if (!user) {
 		const publicUser = await prisma.user.findUnique({

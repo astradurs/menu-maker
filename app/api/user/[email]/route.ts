@@ -15,7 +15,6 @@ export async function GET(request: NextRequest, { params }: { params: { email: s
 	}
 
 	const user = await getUser({ email: email });
-	console.log('USER IN ROUTE', user);
 
 	if (!user) {
 		return NextResponse.json(
