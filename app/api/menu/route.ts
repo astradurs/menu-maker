@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createMenu } from './create-menu';
+import { getMenus } from './get-menus';
 
 export async function POST(request: NextRequest) {
 	const func = 'post.createMenu';
@@ -17,4 +18,15 @@ export async function POST(request: NextRequest) {
 		console.log(func, { error: JSON.stringify(error, null, 2) });
 		return response;
 	}
+}
+
+export async function GET() {
+	const func = 'get.getMenus';
+	console.log('inside GET request for menus');
+
+	// const menus = await getMenus();
+	// console.log('menus', menus);
+	// const response = NextResponse.json(menus, { status: 200 });
+	// console.log(func, { response: JSON.stringify(menus, null, 2) });
+	// return response;
 }
